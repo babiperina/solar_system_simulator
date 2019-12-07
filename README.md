@@ -1,4 +1,4 @@
-# Simulador de Sistema Solar
+# SIMULADOR DE SISTEMA SOLAR
 
 O sistema solar compreende o conjunto construído pelo Sol e todos os corpos celestes que estão sob seu domínio gravitacional. O objetivo deste trabalho é de desenvolver, utilizando Pythom 3 e OpenGL, um simulador do sistema solar. Deve-se utilizar as bibliotecas de algebra linear, transformações lineares e de formas 2D/3D desenvolvidas durante a disciplina, não sendo aceito o uso de qualquer outra biblioteca em nenhuma hipótese.
 
