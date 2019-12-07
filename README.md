@@ -18,6 +18,6 @@ O sistema solar compreende o conjunto construído pelo Sol e todos os corpos ce
 
 ## Feito por
 
-* **Bárbara Perina** - [PurpleBooth](https://github.com/babiperina)
-* **Rodrigo Liporace** - [PurpleBooth](https://github.com/vasques1995)
+* **Bárbara Perina** - [@babiperina](https://github.com/babiperina)
+* **Rodrigo Liporace** - [@vasques1995](https://github.com/vasques1995)
 
