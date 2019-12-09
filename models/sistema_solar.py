@@ -2,7 +2,7 @@ class SistemaSolar:
 
     #diametro, vertices, distancia do sol, qtdeSatelites, r,g,b
     def __init__(self):
-        self.sol = 400, 50, 0, 255, 255, 0
+        self.sol = 40, 50, 0, 255, 255, 0
         self.mercurio = 1.4, 50, 58, 192, 192, 192
         self.venus = 3.5, 50, 108, 218, 165, 32
         self.terra = 3.65, 50, 150, 0, 0, 255

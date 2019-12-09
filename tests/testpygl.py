@@ -31,19 +31,45 @@ def mapear(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart))
 
 
-def draw_esfera(raio, vertices, distancia, rgb):
-    GL.glBegin(GL.GL_POINTS)
-    n_vertices = vertices
-    for i in range(0, n_vertices):
-        lon = mapear(i, 0, n_vertices, -math.pi, math.pi)
-        for j in range(0, n_vertices):
-            lat = mapear(j, 0, n_vertices, -math.pi / 2, math.pi / 2)
-            x = raio * math.sin(lon) * math.cos(lat)
-            y = raio * math.sin(lon) * math.sin(lat)
-            z = raio * math.cos(lon)
-            GL.glColor3f(rgb[0],rgb[1],rgb[2])
-            GL.glVertex3f(x+distancia, y+distancia, z+distancia)
-    GL.glEnd()
+def draw_esfera(raio, n_stacks, n_setores, distanciadosol, rgb):
+    angulo_setores = 2 * math.pi / n_stacks
+    angulo_stacks = math.pi / n_setores
+    # cores = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]
+    glBegin(GL_TRIANGLE_STRIP)
+    for i in range(0, n_stacks):
+        for j in range(0, n_setores + 1):
+            if j % 2 == 0:
+                glColor3f(0, 0, 0)
+            else:
+                glColor3f(rgb[0],rgb[1], rgb[2])
+            # x = (raio * math.cos(angulo_stacks)) * math.cos(angulo_setores)
+            z = math.cos(math.pi - (angulo_stacks * j)) * raio
+            y = math.sin(math.pi - (angulo_stacks * j)) * math.sin(angulo_setores * i) * raio
+            x = math.sin(math.pi - (angulo_stacks * j)) * math.cos(angulo_setores * i) * raio
+            # glColor3f(255, 0, 0)
+            glVertex3f(x+distanciadosol, y+distanciadosol, z+distanciadosol)
+
+            z = math.cos(math.pi - (angulo_stacks * j)) * raio
+            y = math.sin(math.pi - (angulo_stacks * j)) * math.sin(angulo_setores * (i + 1)) * raio
+            x = math.sin(math.pi - (angulo_stacks * j)) * math.cos(angulo_setores * (i + 1)) * raio
+            # glColor3f(0, 255, 0)
+            glVertex3f(x+distanciadosol, y+distanciadosol, z+distanciadosol)
+
+    glEnd()
+
+# def draw_esfera(raio, vertices, distancia, rgb):
+#     GL.glBegin(GL.GL_POINTS)
+#     n_vertices = vertices
+#     for i in range(0, n_vertices):
+#         lon = mapear(i, 0, n_vertices, -math.pi, math.pi)
+#         for j in range(0, n_vertices):
+#             lat = mapear(j, 0, n_vertices, -math.pi / 2, math.pi / 2)
+#             x = raio * math.sin(lon) * math.cos(lat)
+#             y = raio * math.sin(lon) * math.sin(lat)
+#             z = raio * math.cos(lon)
+#             GL.glColor3f(rgb[0],rgb[1],rgb[2])
+#             GL.glVertex3f(x+distancia, y+distancia, z+distancia)
+#     GL.glEnd()
 
 
 def camera(event):
@@ -65,6 +91,7 @@ def camera(event):
                 print("DIREITA")
                 # glTranslatef(1, 0, 0)
                 glRotatef(10,0,1,0)
+
             elif event.key == pygame.K_q:
                 print("ZOOM IN")
                 # glTranslatef(0, 0, 1)
@@ -75,6 +102,13 @@ def camera(event):
                 glScalef(0.8,0.8,0.8)
             else:
                 print(event.key)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4:
+                glScalef(1.2,1.2,1.2)
+            if event.button == 5:
+                glScalef(0.8,0.8,0.8)
+
 
 def main():
     edges = (
@@ -88,7 +122,7 @@ def main():
     sistema_solar = SistemaSolar()
 
     pygame.init()
-    display = (700, 800)
+    display = (1400, 850)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     gluPerspective(150, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -5)
@@ -108,10 +142,11 @@ def main():
         # draw_point(1,1,1)
         for planeta in sistema_solar.get_planetas():
             rgb = planeta[3], planeta[4], planeta[5]
-            draw_esfera(planeta[0], planeta[1], planeta[2], rgb)
+            draw_esfera(planeta[0], planeta[1], planeta[1], planeta[2], rgb)
+
         # draw_esfera(800,50,0)
         # rotate(90,1,triangle.edges)
-        # glRotatef(1, 0, 1, 0)
+        glRotatef(1, 0, 1, 0)
         pygame.display.flip()
         pygame.time.wait(100)
 
